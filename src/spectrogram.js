@@ -11,7 +11,7 @@ async function* getTimer(tickrate) {
 	}
 }
 
-export async function* getSpectrogramStream(mediaStream, windowDuration) {
+export async function* getSpectrogramStream(mediaStream, windowDuration, temporalResolution) {
 	// Try to find the sample rate of the media stream
 	// NOTE: This is brittle.
 	const sampleRate = mediaStream?.getAudioTracks()[0]?.getSettings().sampleRate ?? null
@@ -40,7 +40,7 @@ export async function* getSpectrogramStream(mediaStream, windowDuration) {
 
 	// Periodically get the frequency data from the microphone
 	const chunk = new Uint8Array(analyser.frequencyBinCount)
-	const tickrate = 1000 * windowDuration / audioContext.sampleRate
+	const tickrate = 1000 * temporalResolution / audioContext.sampleRate
 	const timer = getTimer(tickrate)
 	for await (const _ of timer) {
 		// Read the latest frequency data from the microphone into the

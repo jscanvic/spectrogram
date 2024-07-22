@@ -7,7 +7,11 @@ const canvas = document.getElementById('canvas')
 
 const ui = new UI()
 const mediaStream = await ui.getEventualMediaStream()
-const stream = getSpectrogramStream(mediaStream, config.windowDuration)
+const stream = getSpectrogramStream(
+	mediaStream,
+	config.windowDuration,
+	config.temporalResolution,
+)
 
 const height = config.windowDuration / 2
 const width = config.maxDuration / config.temporalResolution
@@ -16,6 +20,7 @@ const renderer = new Renderer(
 	stream,
 	height,
 	width,
+	config.verticalZoom,
 )
 
 renderer.start()

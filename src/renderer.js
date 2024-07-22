@@ -8,7 +8,7 @@ export class Renderer {
 	// The discretization in the frequency domain is obtained in the same way
 	// from the discretization in the time domain as for the discrete Fourier
 	// transform.
-	constructor(canvas, stream, height, width) {
+	constructor(canvas, stream, height, width, verticalZoom) {
 		// We set the resolution of the canvas to match the physical
 		// resolution of the display
 		// window.devicePixelRatio is the size of a CSS pixel in
@@ -42,7 +42,7 @@ export class Renderer {
 		// for the texture and for the rendering context
 		ctx.resetTransform()
 		ctx.translate(canvas.width, canvas.height)
-		ctx.scale(-canvas.width / width, -canvas.height / height)
+		ctx.scale(-canvas.width / width, -canvas.height * verticalZoom / height)
 
 		this.stream = stream
 		this.height = height
