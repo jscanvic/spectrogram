@@ -1,14 +1,22 @@
 import { sleep } from "./time.js"
 
-// NOTE: This timer is very inaccurate as it's based on the setTimeout function
-// which provides no guarantee of precision. A better implementation might use
-// the Date class to measure time intervals more precisely. This means that for
-// high window durations, the spectrogram might be way off in time.
 async function* getTimer(tickrate) {
+	let last = Date.now()
+	let ticks = 0
 	while (true) {
-		await sleep(tickrate)
-		yield
+		const now = Date.now()
+		ticks += Math.floor(Math.max(0, (now - last) / tickrate))
+		if (ticks != 0) {
+			last = now
+		}
+		for (; ticks != 0; ticks--) {
+			yield
+			// This allows the frequency data to be gathered before the next tick
+		}
+		// This avoids busy waiting, i.e. putting the CPU on fire
+		await sleep(last + tickrate - now)
 	}
+
 }
 
 export async function* getSpectrogramStream(mediaStream, windowDuration, temporalResolution) {
@@ -40,8 +48,7 @@ export async function* getSpectrogramStream(mediaStream, windowDuration, tempora
 
 	// Periodically get the frequency data from the microphone
 	const chunk = new Uint8Array(analyser.frequencyBinCount)
-	const tickrate = 1000 * temporalResolution / audioContext.sampleRate
-	const timer = getTimer(tickrate)
+	const timer = getTimer(temporalResolution)
 	for await (const _ of timer) {
 		// Read the latest frequency data from the microphone into the
 		// variable chunk
