@@ -4,12 +4,17 @@
 	<div data-path="/sounds/dog.mp3">Play Dog Sound</div>
 	<div data-path="/sounds/wind.mp3">Play Wind Sound</div>
 </div>
+<div id="axes-overlay" style="display: flex; flex-direction: column; justify-content: space-between"></div>
 <canvas id="canvas"></canvas>
 
 <style>
+*, *::before, *::after {
+	box-sizing: inherit;
+}
 :root {
 	font-size: 18px;
 	font-family: sans-serif;
+	box-sizing: border-box;
 }
 body {
 	margin: 0;
@@ -39,6 +44,16 @@ body {
 #sounds {
 	bottom: 0;
 	left: 0;
+}
+#axes-overlay {
+	font-size: 1.5rem;
+	color: #000;
+	cursor: pointer;
+	position: absolute;
+	z-index: 1000;
+	height: 100vh;
+	right: 0;
+	text-align: right;
 }
 </style>
 

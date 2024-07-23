@@ -1,5 +1,5 @@
 import { config } from "./config.js"
-import { getSpectrogramStream } from "./spectrogram.js"
+import { SpectrogramStream } from "./spectrogram.js"
 import { Renderer } from "./renderer.js"
 import { UI } from "./ui.js"
 
@@ -7,7 +7,7 @@ const canvas = document.getElementById('canvas')
 
 const ui = new UI()
 const mediaStream = await ui.getEventualMediaStream()
-const stream = getSpectrogramStream(
+const stream = new SpectrogramStream(
 	mediaStream,
 	config.windowDuration,
 	config.temporalResolution,

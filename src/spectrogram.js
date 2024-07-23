@@ -19,40 +19,47 @@ async function* getTimer(tickrate) {
 
 }
 
-export async function* getSpectrogramStream(mediaStream, windowDuration, temporalResolution) {
-	// Try to find the sample rate of the media stream
-	// NOTE: This is brittle.
-	const sampleRate = mediaStream?.getAudioTracks()[0]?.getSettings().sampleRate ?? null
-	const audioContext = new AudioContext({
-		sampleRate,
-		smoothingTimeConstant: 0,
-		maxDecibels: -30,
-		minDecibels: -100,
-	})
+export class SpectrogramStream {
+	constructor(mediaStream, windowDuration, temporalResolution) {
+		// Try to find the sample rate of the media stream
+		// NOTE: This is brittle.
+		const sampleRate = mediaStream?.getAudioTracks()[0]?.getSettings().sampleRate ?? null
+		const audioContext = new AudioContext({
+			sampleRate,
+			smoothingTimeConstant: 0,
+			maxDecibels: -30,
+			minDecibels: -100,
+		})
 
-	// Automatically get an audio source with exactly one audio channel
-	// from the microphone
-	const audioSource = audioContext.createMediaStreamSource(mediaStream)
+		// Automatically get an audio source with exactly one audio channel
+		// from the microphone
+		const audioSource = audioContext.createMediaStreamSource(mediaStream)
 
-	// This is what's responsible for computing the discrete Fourier
-	// transforms.
-	const analyser = new AnalyserNode(audioContext, {
-		fftSize: windowDuration,
-		channelCount: 1,
-	})
+		// This is what's responsible for computing the discrete Fourier
+		// transforms.
+		const analyser = new AnalyserNode(audioContext, {
+			fftSize: windowDuration,
+			channelCount: 1,
+		})
 
-	// Connect the microphone to the DFT node
-	audioSource.connect(analyser)
+		// Connect the microphone to the DFT node
+		audioSource.connect(analyser)
 
-	console.info(`Sample rate: ${audioContext.sampleRate} Hz`)
+		console.info(`Sample rate: ${audioContext.sampleRate} Hz`)
+		this.sampleRate = audioContext.sampleRate
+		this.analyser = analyser
+		this.temporalResolution = temporalResolution
+	}
 
-	// Periodically get the frequency data from the microphone
-	const chunk = new Uint8Array(analyser.frequencyBinCount)
-	const timer = getTimer(temporalResolution)
-	for await (const _ of timer) {
-		// Read the latest frequency data from the microphone into the
-		// variable chunk
-		analyser.getByteFrequencyData(chunk)
-		yield chunk
+	async* get() {
+		// Periodically get the frequency data from the microphone
+		const chunk = new Uint8Array(this.analyser.frequencyBinCount)
+		const timer = getTimer(this.temporalResolution)
+		for await (const _ of timer) {
+			// Read the latest frequency data from the microphone into the
+			// variable chunk
+			this.analyser.getByteFrequencyData(chunk)
+			yield chunk
+		}
 	}
 }
