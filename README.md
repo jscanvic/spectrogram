@@ -2,6 +2,10 @@ A real-time spectrogram running in the browser written in JavaScript using the [
 
 ![Graphical User Interface of the Spectrogram](assets/gui.png)
 
+# Demo
+
+A live demo is available [here](https://jeremyscanvic.com/spectrogram/)
+
 # Usage
 
 Clone the repository
