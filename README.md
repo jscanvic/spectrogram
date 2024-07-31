@@ -1,3 +1,5 @@
+A real-time spectrogram running in the browser written in JavaScript using the [Web Audio API](https://www.w3.org/TR/webaudio/)
+
 ![Graphical User Interface of the Spectrogram](assets/gui.png)
 
 # Usage
