@@ -7,6 +7,6 @@ export const config = {
 	// Maximum duration of the spectrogram displayed on screen (in milliseconds)
 	maxDuration: 5000,
 	// Temporal resolution in milliseconds
-	temporalResolution: 20,
-	verticalZoom: 12,
+	temporalResolution: 8,
+	verticalZoom: 8,
 }

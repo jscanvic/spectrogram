@@ -1,60 +1,54 @@
-<div id="microphone">Start Recording</div>
-<div id="sounds">
-	<div data-path="sounds/cat.mp3">Play Cat Sound</div>
-	<div data-path="sounds/dog.mp3">Play Dog Sound</div>
-	<div data-path="sounds/wind.mp3">Play Wind Sound</div>
-</div>
-<div id="axes-overlay" style="display: flex; flex-direction: column; justify-content: space-between"></div>
-<canvas id="canvas"></canvas>
-
-<style>
-*, *::before, *::after {
-	box-sizing: inherit;
-}
-:root {
-	font-size: 18px;
-	font-family: sans-serif;
-	box-sizing: border-box;
-}
-body {
-	margin: 0;
-	width: 100vw;
-	height: 100vh;
-}
-#canvas {
-	width: 100%;
-	height: 100%;
-	/* This color is from the color map. */
-	background: rgb(255, 245, 240);
-	/* NOTE: This is needed to avoid overflow. */
-	display: block;
-}
-#microphone, #sounds {
-	font-size: 1.5rem;
-	color: #000;
-	padding: .25em .5em;
-	cursor: pointer;
-	position: absolute;
-	z-index: 1000;
-}
-#microphone {
-	bottom: 0;
-	right: 0;
-}
-#sounds {
-	bottom: 0;
-	left: 0;
-}
-#axes-overlay {
-	font-size: 1.5rem;
-	color: #000;
-	cursor: pointer;
-	position: absolute;
-	z-index: 1000;
-	height: 100vh;
-	right: 0;
-	text-align: right;
-}
-</style>
-
-<script type="module" src="src/main.js"></script>
+<!doctype html>
+<html>
+<head>
+	<style>
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
+	:root {
+		font-size: 18px;
+		font-family: sans-serif;
+		box-sizing: border-box;
+	}
+	body {
+		margin: 0;
+		width: 100vw;
+		height: 100vh;
+	}
+	#canvas {
+		width: 100%;
+		height: 100%;
+		/* This color is from the color map. */
+		background: rgb(68, 1, 84);
+		/* NOTE: This is needed to avoid overflow. */
+		display: block;
+	}
+	#microphone {
+		font-size: 1.5rem;
+		color: #ccc;
+		padding: .25em .5em;
+		cursor: pointer;
+		position: absolute;
+		z-index: 1000;
+		bottom: 0;
+		right: 0;
+	}
+	#axes-overlay {
+		font-size: 1.5rem;
+		color: #ccc;
+		cursor: pointer;
+		position: absolute;
+		z-index: 1000;
+		height: 100vh;
+		right: 0;
+		text-align: right;
+	}
+	</style>
+</head>
+<body>
+	<div id="microphone">Start Recording</div>
+	<div id="axes-overlay" style="display: flex; flex-direction: column; justify-content: space-between"></div>
+	<canvas id="canvas"></canvas>
+	<script type="module" src="src/main.js"></script>
+</body>
+</html>

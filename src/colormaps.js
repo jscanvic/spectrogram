@@ -9,7 +9,7 @@ export function applyColorMap(data) {
 	// in order to avoid possibly costly memory allocations.
 	const imageData = new Uint8ClampedArray(data.length * 4)
 	for (let i = 0; i < data.length; i++) {
-		const cmap = cmapTable3
+		const cmap = cmapTable1
 		const c = cmap[Math.floor(data[i] * (cmap.length - 1) / 255)]
 		// const c = cmap[data[i]]
 		imageData[i * 4] = c[0] * 255

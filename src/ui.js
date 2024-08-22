@@ -17,13 +17,11 @@ export class UI {
 	// that determine different media streams.
 	hook() {
 		const microphoneButtonEl = document.getElementById("microphone")
-		const soundsButtonEl = document.getElementById("sounds")
-		const buttons = [microphoneButtonEl, soundsButtonEl]
 		// The event handler
 		async function handler() {
 			try {
 				// Delete the button upon click
-				buttons.forEach(button => button.remove())
+				microphoneButtonEl.remove()
 
 				// Get the instance of MediaStream corresponding to the user's microphone
 				const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -46,29 +44,6 @@ export class UI {
 			// Remove the event listener after it's been triggered once
 			once: true
 		})
-
-		soundsButtonEl.addEventListener("click", async (event) => {
-			const target = event.target
-			if (target.dataset.path === undefined) {
-				return
-			}
-			buttons.forEach(button => button.remove())
-			const audioEl = document.createElement("audio")
-			audioEl.src = target.dataset.path
-
-			const mediaStream = audioEl.captureStream()
-
-			// NOTE: We wait for the audio to be fully loaded before playing it in
-			// order to avoid buffering.
-			audioEl.addEventListener("canplaythrough", async () => {
-				audioEl.play()
-				// NOTE: Before the audio starts playing, its sample rate is
-				// unknown, so we need to wait a bit more.
-				audioEl.addEventListener("timeupdate", () => {
-					this.resolve(mediaStream)
-				}, { once: true })
-			})
-		}, { once: true })
 	}
 
 	async getEventualMediaStream() {
