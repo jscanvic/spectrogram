@@ -13,8 +13,6 @@ export class UI {
 		this.hook()
 	}
 
-	// NOTE: This is very messy. The point is there's multiple user interactions
-	// that determine different media streams.
 	hook() {
 		const microphoneButtonEl = document.getElementById("microphone")
 		// The event handler
