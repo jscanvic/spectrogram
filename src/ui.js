@@ -42,6 +42,40 @@ export class UI {
 			// Remove the event listener after it's been triggered once
 			once: true
 		})
+
+		this.hookLineControls()
+	}
+
+	hookLineControls() {
+		const horizontalLineEl = document.getElementById("horizontal-line")
+		// Place the line
+		const maxFreq = 3000
+		const minFreq = 0
+		const targetFreq = 440
+		horizontalLineEl.style.bottom = `${100 * (targetFreq - minFreq) / (maxFreq - minFreq)}%`
+
+		const containerEl = document.getElementById("line-controls-container")
+		const checkboxEl = document.createElement("input")
+		checkboxEl.type = "checkbox"
+
+		// Place the controls in the document
+		containerEl.appendChild(checkboxEl)
+
+		// Handle actions
+		checkboxEl.addEventListener("change", (event) => {
+			event.stopPropagation()
+			if (event.target.checked) {
+				horizontalLineEl.style.opacity = 1
+			} else {
+				horizontalLineEl.style.opacity = 0
+			}
+		})
+
+		containerEl.addEventListener("click", (event) => {
+			if (event.target !== checkboxEl) {
+				checkboxEl.click()
+			}
+		})
 	}
 
 	async getEventualMediaStream() {
