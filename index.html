@@ -1,80 +1,36 @@
 <!doctype html>
 <html>
 <head>
-	<style>
-	*, *::before, *::after {
-		box-sizing: inherit;
-	}
-	:root {
-		font-size: 18px;
-		font-family: sans-serif;
-		box-sizing: border-box;
-		/* Disable selection */
-	    	-webkit-user-select: none;
-	    	-moz-user-select: none;
-	    	-ms-user-select: none;
-	    	user-select: none;
-	}
-	body {
-		margin: 0;
-		width: 100vw;
-		height: 100vh;
-		font-size: 1.5rem;
-		color: #ccc;
-	}
-	#canvas {
-		width: 100%;
-		height: 100%;
-		/* This color is from the color map. */
-		background: rgb(68, 1, 84);
-		/* NOTE: This is needed to avoid overflow. */
-		display: block;
-	}
-	#microphone {
-		padding: .25em .5em;
-		cursor: pointer;
-		position: absolute;
-		z-index: 1000;
-		bottom: 0;
-		right: 0;
-	}
-	#axes-overlay {
-		cursor: pointer;
-		position: absolute;
-		z-index: 1000;
-		height: 100vh;
-		right: 0;
-		text-align: right;
-	}
-	#bottom-left-controls {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-	}
-	.horizontal-line {
-		border-top: 2px solid #ccc;
-		position: absolute;
-		width: 100%;
-	}
-	#horizontal-line {
-		opacity: 0;
-	}
-	input[type="checkbox"] {
-		margin: 0 1rem;
-	}
-	</style>
+	<title>Spectrogram</title>
+	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="module" src="src/main.js" defer></script>
 </head>
-<body>
-	<div id="microphone">Start Recording</div>
-	<div id="bottom-left-controls" style="padding: .25em .5em;">
-		<div id="line-controls-container" style="display: flex; flex-direction: row; cursor: pointer; ">
-			<div>440 Hz Line</div>
+<!--
+The spectrogram is drawn onto a canvas and a user interface is displayed on top
+of it.
+-->
+<body id="state-bearer" class="default-state">
+	<!-- Canvas -->
+	<canvas id="canvas"></canvas>
+	<!-- Padding-free overlay -->
+	<div class="overlay">
+		<!-- Frequency scale -->
+		<div id="axes-overlay" style="display: flex; flex-direction: column; justify-content: space-between"></div>
+		<!-- 440 Hz line -->
+		<div id="horizontal-line" class="horizontal-line" style="visibility: hidden"></div>
+	</div>
+	<!-- Padded overlay -->
+	<div class="overlay horizontal-split" style="padding: .25rem .5rem;">
+		<!-- Left controls -->
+		<div class="show-spectrogram-state" style="display: flex; flex-direction: row; cursor: pointer;">
+			<label for="line-controls-checkbox">440 Hz Line</label>
+			<input type="checkbox" id="line-controls-checkbox">
+		</div>
+		<!-- Right controls -->
+		<div class="show-default-state">
+			<button id="start-recording-button">Start Recording</button>
 		</div>
 	</div>
-	<div id="axes-overlay" style="display: flex; flex-direction: column; justify-content: space-between"></div>
-	<div id="horizontal-line" class="horizontal-line" style="width: 100%;">
-	</div>
-	<canvas id="canvas"></canvas>
-	<script type="module" src="src/main.js"></script>
 </body>
 </html>

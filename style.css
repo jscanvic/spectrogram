@@ -1,0 +1,88 @@
+*, *::before, *::after {
+	box-sizing: inherit;
+	cursor: inherit;
+}
+:root {
+	font-size: 18px;
+	font-family: sans-serif;
+	box-sizing: border-box;
+	/* Disable selection */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+body {
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	font-size: 1.5rem;
+	color: #ccc;
+}
+canvas {
+	/* NOTE: This is needed to avoid overflow. */
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+#canvas {
+	/* This color is from the color map. */
+	background: rgb(68, 1, 84);
+}
+#axes-overlay {
+	position: absolute;
+	z-index: 1000;
+	height: 100vh;
+	right: 0;
+	text-align: right;
+}
+.horizontal-line {
+	border-top: 2px solid #ccc;
+	position: absolute;
+	width: 100%;
+}
+/* Increase spacing around checkboxes */
+input[type="checkbox"] {
+	margin: 0 1rem;
+}
+.overlay {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+}
+.horizontal-split {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+.show-default-state {
+	visibility: hidden;
+}
+#state-bearer.default-state .show-default-state {
+	visibility: visible;
+}
+.show-spectrogram-state {
+	visibility: hidden;
+}
+#state-bearer.spectrogram-state .show-spectrogram-state {
+	visibility: visible;
+}
+/* Make buttons look like regular text */
+button {
+	cursor: pointer;
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	overflow: visible;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	line-height: normal;
+	-webkit-font-smoothing: inherit;
+	-moz-osx-font-smoothing: inherit;
+	-webkit-appearance: none;
+}

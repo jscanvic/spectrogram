@@ -14,12 +14,14 @@ export class UI {
 	}
 
 	hook() {
-		const microphoneButtonEl = document.getElementById("microphone")
+		const stateClassBearerEl = document.getElementById("state-bearer")
+		const startRecordingBtn = document.getElementById("start-recording-button")
 		// The event handler
 		async function handler() {
 			try {
-				// Delete the button upon click
-				microphoneButtonEl.remove()
+				// Update the state class lists
+				stateClassBearerEl.classList.remove("default-state")
+				stateClassBearerEl.classList.add("spectrogram-state")
 
 				// Get the instance of MediaStream corresponding to the user's microphone
 				const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -38,7 +40,7 @@ export class UI {
 		}
 
 		// Fire the event listener when the button is clicked
-		microphoneButtonEl.addEventListener("click", handler.bind(this), {
+		startRecordingBtn.addEventListener("click", handler.bind(this), {
 			// Remove the event listener after it's been triggered once
 			once: true
 		})
@@ -54,26 +56,15 @@ export class UI {
 		const targetFreq = 440
 		horizontalLineEl.style.bottom = `${100 * (targetFreq - minFreq) / (maxFreq - minFreq)}%`
 
-		const containerEl = document.getElementById("line-controls-container")
-		const checkboxEl = document.createElement("input")
-		checkboxEl.type = "checkbox"
-
-		// Place the controls in the document
-		containerEl.appendChild(checkboxEl)
+		const checkboxEl = document.getElementById("line-controls-checkbox")
 
 		// Handle actions
 		checkboxEl.addEventListener("change", (event) => {
 			event.stopPropagation()
 			if (event.target.checked) {
-				horizontalLineEl.style.opacity = 1
+				horizontalLineEl.style.visibility = "visible"
 			} else {
-				horizontalLineEl.style.opacity = 0
-			}
-		})
-
-		containerEl.addEventListener("click", (event) => {
-			if (event.target !== checkboxEl) {
-				checkboxEl.click()
+				horizontalLineEl.style.visibility = "hidden"
 			}
 		})
 	}
