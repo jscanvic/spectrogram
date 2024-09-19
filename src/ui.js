@@ -1,5 +1,6 @@
 // A very basic user interface with a default state and a second state after
 // one of the audio sources has been chosen
+
 // NOTE: This is messy.
 export class UI {
 	constructor() {
