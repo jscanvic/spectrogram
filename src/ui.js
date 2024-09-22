@@ -3,7 +3,9 @@
 
 // NOTE: This is messy.
 export class UI {
-	constructor() {
+	constructor(maximumFrequency) {
+		this.maximumFrequency = maximumFrequency
+
 		// A slightly unidiomatic way to synchronize stuff
 		this.promise = new Promise((resolve, reject) => {
 			this.resolve = resolve
@@ -31,6 +33,7 @@ export class UI {
 					// The video stream is unnecessary.
 					video: false
 				})
+				this.displayAxisLabels()
 
 				// Resolve the promise with the MediaStream instance
 				this.resolve(mediaStream)
@@ -72,5 +75,27 @@ export class UI {
 
 	async getEventualMediaStream() {
 		return this.promise
+	}
+
+	displayAxisLabels() {
+		const el = document.getElementById("axes-overlay")
+		const minimumFrequency = 0
+		const maximumFrequency = this.maximumFrequency
+		const N = 5
+		const step = Math.floor((maximumFrequency - minimumFrequency) / N)
+		const freqs = []
+		for (let f = maximumFrequency; f >= minimumFrequency; f -= step) {
+			freqs.push(f)
+		}
+
+		function formatFreq(freq) {
+			return `${freq} Hz`
+		}
+
+		for (const freq of freqs) {
+			const childEl = document.createElement("div")
+			childEl.textContent = formatFreq(freq)
+			el.appendChild(childEl)
+		}
 	}
 }

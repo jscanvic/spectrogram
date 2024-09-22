@@ -3,7 +3,7 @@ import { SpectrogramStream } from "./spectrogram.js"
 import { Renderer } from "./renderer.js"
 import { UI } from "./ui.js"
 
-const ui = new UI()
+const ui = new UI(config.maximumFrequency)
 const mediaStream = await ui.getEventualMediaStream()
 const stream = new SpectrogramStream(
 	mediaStream,

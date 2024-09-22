@@ -62,9 +62,6 @@ export class Renderer {
 		this.stream = stream
 		this.height = height
 		this.ctx = ctx
-		this.maximumFrequency = maximumFrequency
-
-		this.setupAxesOverlay()
 	}
 
 	// NOTE: It'd be great to make this function regular as opposed to
@@ -140,28 +137,6 @@ export class Renderer {
 			}
 		} catch (err) {
 			console.error(err)
-		}
-	}
-
-	setupAxesOverlay() {
-		const el = document.getElementById("axes-overlay")
-		const minimumFrequency = 0
-		const maximumFrequency = this.maximumFrequency
-		const N = 5
-		const step = Math.floor((maximumFrequency - minimumFrequency) / N)
-		const freqs = []
-		for (let f = maximumFrequency; f >= minimumFrequency; f -= step) {
-			freqs.push(f)
-		}
-
-		function formatFreq(freq) {
-			return `${freq} Hz`
-		}
-
-		for (const freq of freqs) {
-			const childEl = document.createElement("div")
-			childEl.textContent = formatFreq(freq)
-			el.appendChild(childEl)
 		}
 	}
 }
