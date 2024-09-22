@@ -14,6 +14,7 @@ export class UI {
 
 		// Hook the logic to the UI elements
 		this.hook()
+		this.setUpAxisLabels()
 	}
 
 	hook() {
@@ -33,7 +34,6 @@ export class UI {
 					// The video stream is unnecessary.
 					video: false
 				})
-				this.displayAxisLabels()
 
 				// Resolve the promise with the MediaStream instance
 				this.resolve(mediaStream)
@@ -77,7 +77,7 @@ export class UI {
 		return this.promise
 	}
 
-	displayAxisLabels() {
+	setUpAxisLabels() {
 		const el = document.getElementById("axes-overlay")
 		const minimumFrequency = 0
 		const maximumFrequency = this.maximumFrequency

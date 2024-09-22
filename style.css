@@ -35,6 +35,10 @@ canvas {
 	height: 100vh;
 	right: 0;
 	text-align: right;
+	visibility: hidden;
+}
+#state-bearer.spectrogram-state #axes-overlay {
+	visibility: visible;
 }
 .horizontal-line {
 	border-top: 2px solid #ccc;
