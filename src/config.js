@@ -8,5 +8,6 @@ export const config = {
 	maxDuration: 5000,
 	// Temporal resolution in milliseconds
 	temporalResolution: 8,
-	verticalZoom: 8,
+	// Maximum frequency (in Hertz) shown on the spectrogram
+	maximumFrequency: 3000,
 }

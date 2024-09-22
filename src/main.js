@@ -19,7 +19,7 @@ const renderer = new Renderer(
 	stream,
 	height,
 	width,
-	config.verticalZoom,
+	config.maximumFrequency,
 )
 
 renderer.start()

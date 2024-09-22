@@ -23,7 +23,7 @@ export class Renderer {
 	// The discretization in the frequency domain is obtained in the same way
 	// from the discretization in the time domain as for the discrete Fourier
 	// transform.
-	constructor(canvas, stream, height, width, verticalZoom) {
+	constructor(canvas, stream, height, width, maximumFrequency) {
 		// We set the resolution of the canvas to match the physical
 		// resolution of the display
 		// window.devicePixelRatio is the size of a CSS pixel in
@@ -57,13 +57,12 @@ export class Renderer {
 		// for the texture and for the rendering context
 		ctx.resetTransform()
 		ctx.translate(canvas.width, canvas.height)
-		ctx.scale(-canvas.width / width, -canvas.height * verticalZoom / height)
+		ctx.scale(-canvas.width / width, -canvas.height * stream.sampleRate / (2 * maximumFrequency * height))
 
 		this.stream = stream
-		this.sampleRate = stream.sampleRate
 		this.height = height
 		this.ctx = ctx
-		this.verticalZoom = verticalZoom
+		this.maximumFrequency = maximumFrequency
 
 		this.setupAxesOverlay()
 	}
@@ -147,7 +146,7 @@ export class Renderer {
 	setupAxesOverlay() {
 		const el = document.getElementById("axes-overlay")
 		const minimumFrequency = 0
-		const maximumFrequency = this.sampleRate / (2 * this.verticalZoom)
+		const maximumFrequency = this.maximumFrequency
 		const N = 5
 		const step = Math.floor((maximumFrequency - minimumFrequency) / N)
 		const freqs = []
