@@ -1,4 +1,19 @@
-import { applyColorMap } from "./colormaps.js"
+import colormap from "./colormaps.js"
+
+// NOTE: We might be able to mutate the data array directly
+// in order to avoid possibly costly memory allocations.
+function applyColorMap(data) {
+	const imageData = new Uint8ClampedArray(data.length * 4)
+	for (let i = 0; i < data.length; i++) {
+		const c = colormap[Math.floor(data[i] * (colormap.length - 1) / 255)]
+		// const c = cmap[data[i]]
+		imageData[i * 4] = c[0] * 255
+		imageData[i * 4 + 1] = c[1] * 255
+		imageData[i * 4 + 2] = c[2] * 255
+		imageData[i * 4 + 3] = 255
+	}
+	return imageData
+}
 
 // This class is responsible for rendering the spectrogram chunk by chunk on a
 // canvas.
