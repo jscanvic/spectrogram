@@ -2,11 +2,11 @@ A real-time spectrogram running in the browser featured at [la Fête de la Scien
 
 ![Graphical User Interface of the Spectrogram](assets/gui.png)
 
-# Demo
+# Online version
 
-A live demo is available [here](https://jeremyscanvic.com/spectrogram/)
+The spectrogram is running [at this URL](https://jeremyscanvic.com/spectrogram/)
 
-# Usage
+# Local installation
 
 Clone the repository
 
@@ -22,3 +22,7 @@ python -m http.server -b 127.0.0.1 8000
 ```
 
 Open [this URL](http://127.0.0.1:8000/) in a web browser
+
+# Implementation details
+
+The spectrogram is computed using the [Web Audio API](https://www.w3.org/TR/webaudio/) and more precisely using the [AnalyserNode](https://www.w3.org/TR/webaudio/#AnalyserNode) interface. It is continuously rendered onto an [HTMLCanvasElement](https://html.spec.whatwg.org/multipage/canvas.html#the-canvas-element). Every time a new section of the spectrogram is about to be rendered, everything else is shifted to the left before it is drawn on the newly available space. This is more computationally efficient than rendering the whole spectrogram at every frame and it enables real-time rendering at a higher temporal resolution.
