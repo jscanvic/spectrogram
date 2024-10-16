@@ -21,8 +21,4 @@ Start an HTTP server in the current directory
 python -m http.server -b 127.0.0.1 8000
 ```
 
-Open the following URL in a web browser
-
-```bash
-xdg-open "http://127.0.0.1:8000/"
-```
+Open [this URL](http://127.0.0.1:8000/) in a web browser
