@@ -1,4 +1,4 @@
-A real-time spectrogram running in the browser written in JavaScript using the [Web Audio API](https://www.w3.org/TR/webaudio/)
+A real-time spectrogram running in the browser featured at [la Fête de la Science (2024)](https://www.ens-lyon.fr/evenement/savoirs/physique-decouvrir-comment-la-transformee-de-fourier-revele-les-secrets-caches)
 
 ![Graphical User Interface of the Spectrogram](assets/gui.png)
 
