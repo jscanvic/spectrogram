@@ -23,22 +23,21 @@ async function* getTimer(tickrate) {
 
 export class SpectrogramStream {
 	constructor(mediaStream, windowDuration, temporalResolution) {
-		// Try to find the sample rate of the media stream
-		// NOTE: This is brittle.
-		const sampleRate = mediaStream?.getAudioTracks()[0]?.getSettings().sampleRate ?? null
+		// Create a new audio context to which the microphone will be
+		// connected as well as the AnalyserNode responsible for
+		// computing the discrete Fourier transforms
 		const audioContext = new AudioContext({
-			sampleRate,
 			smoothingTimeConstant: 0,
 			maxDecibels: -30,
 			minDecibels: -100,
 		})
 
-		// Automatically get an audio source with exactly one audio channel
-		// from the microphone
+		// Automatically get an audio source with exactly one audio
+		// channel from the microphone
 		const audioSource = audioContext.createMediaStreamSource(mediaStream)
 
-		// This is what's responsible for computing the discrete Fourier
-		// transforms.
+		// Create a new analyser node which is responsible for
+		// computing the discrete Fourier transforms.
 		const analyser = new AnalyserNode(audioContext, {
 			fftSize: windowDuration,
 			channelCount: 1,
