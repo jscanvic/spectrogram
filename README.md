@@ -23,6 +23,10 @@ python -m http.server -b 127.0.0.1 8000
 
 Open [this URL](http://127.0.0.1:8000/) in a web browser
 
+# Supported configurations
+
+The spectrogram is designed to run on laptops and desktops using any Chromium-based or Firefox-based web browser. It is not supported on mobile devices.
+
 # Implementation details
 
 The spectrogram is computed using the [Web Audio API](https://www.w3.org/TR/webaudio/) and more precisely using the [AnalyserNode](https://www.w3.org/TR/webaudio/#AnalyserNode) interface which is responsible for computing the discrete Fourier transforms. It is continuously rendered onto an [HTMLCanvasElement](https://html.spec.whatwg.org/multipage/canvas.html#the-canvas-element). Every time a new section of the spectrogram is about to be rendered, everything else is shifted to the left before it is drawn on the newly available space. This is more computationally efficient than rendering the whole spectrogram at every frame and it enables real-time rendering at a higher temporal resolution.
