@@ -25,12 +25,12 @@ of it.
 		<!-- Left controls -->
 		<div class="show-spectrogram-state" style="display: flex; flex-direction: row; cursor: pointer;">
 			<label for="line-controls-checkbox">440 Hz Line</label>
-			<input type="checkbox" id="line-controls-checkbox">
+			<input type="checkbox" id="line-controls-checkbox" tabindex="-1">
 		</div>
-		<!-- Right controls -->
-		<div class="show-default-state">
-			<button id="start-recording-button">Start Recording</button>
-		</div>
+	</div>
+	<!-- Starting screen overlay -->
+	<div class="overlay show-default-state" style="display: flex; justify-content: center; align-items: center; cursor: pointer">
+		click anywhere to start
 	</div>
 </body>
 </html>

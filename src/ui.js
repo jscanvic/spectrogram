@@ -19,7 +19,6 @@ export class UI {
 
 	hook() {
 		const stateClassBearerEl = document.getElementById("state-bearer")
-		const startRecordingBtn = document.getElementById("start-recording-button")
 		// The event handler
 		async function handler() {
 			try {
@@ -43,8 +42,8 @@ export class UI {
 			}
 		}
 
-		// Fire the event listener when the button is clicked
-		startRecordingBtn.addEventListener("click", handler.bind(this), {
+		// Fire the event listener when the page is first clicked
+		document.addEventListener("click", handler.bind(this), {
 			// Remove the event listener after it's been triggered once
 			once: true
 		})
