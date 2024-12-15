@@ -99,20 +99,12 @@ export class Renderer {
 		this.ctx.drawImage(bitmap, 0, 0)
 	}
 
-	// This function translates everything that has been drawn on the canvas.
-	// NOTE: It's somewhat expensive as it requires 1) reading the whole canvas
-	// and 2) redrawing it entirely. It's unclear how to avoid that though.
+	// This function draws a shifted copy of the canvas on itself. NOTE:
+	// The canvas is **not** cleared before drawing the shifted copy.
+	// For more details, see https://stackoverflow.com/a/36337777
 	translateEverythingDrawn(ctx, dx, dy) {
-		// Read the whole canvas
-		const content = ctx.getImageData(0, 0, canvas.width, canvas.height)
-
-		// Clear the canvas
-		ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-		// The methods getImageData and putImageData use the global coordinate system
-		// of the canvas and is unaffected by the transformation matrix. This means
-		// we need to apply the transformation matrix ourselves since the variables dx
-		// and dy are expected to be expressed in the local coordinate system.
+		// It is unclear why but we need to apply the transformation
+		// matrix manually to the translation vector.
 		const transform = ctx.getTransform()
 
 		// The property transform.a holds the horizontal scaling factor
@@ -123,8 +115,15 @@ export class Renderer {
 		// of the transformation matrix.
 		dy = transform.d * dy
 
-		// Draw the translated content
-		ctx.putImageData(content, dx, dy)
+		// Reset the coordinate system before drawing the translated
+		// canvas
+		ctx.resetTransform()
+
+		// Draw the translated canvas
+		ctx.drawImage(ctx.canvas, dx, dy)
+
+		// Restore the transformation matrix
+		ctx.setTransform(transform)
 	}
 
 	// Hook the stream to the renderer
